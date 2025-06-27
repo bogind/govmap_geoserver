@@ -54,6 +54,19 @@ def get_feature_count(layer_name):
         logger.error(f"Failed to get count for {layer_name}: {e}")
         return 0
 
+def get_layer_info(layer_name):
+    url = (
+        f"https://www.govmap.gov.il/api/geoserver/wfs?"
+        f"SERVICE=WFS&REQUEST=DescribeFeatureType&typeName={layer_name}&VERSION=2.0.0&outputFormat=application/json"
+    )
+    try:
+        resp = requests.get(url)
+        resp.raise_for_status()
+        return resp.json()
+    except Exception as e:
+        logger.error(f"Failed to get layer info for {layer_name}: {e}")
+        return None
+
 def fetch_features(layer_name, start_index, count=CHUNK_SIZE):
     url = (
         f"https://www.govmap.gov.il/api/geoserver/wfs?"
