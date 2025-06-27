@@ -1,0 +1,4 @@
+.venv/*
+output_geopackages/*
+temp_chunks/*
+*.log
